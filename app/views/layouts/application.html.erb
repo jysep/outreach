@@ -6,11 +6,19 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   </head>
 
   <body>
-    <div class="container-fluid">
-      <%= yield %>
+    <nav class="navbar navbar-inverse bg-inverse">
+      <a class="navbar-brand" href="#">Outreach Data</a>
+    </nav>
+    <div class="container" style="margin-top: 1em; margin-bottom: 1em;">
+      <div class="card">
+        <div class="card-block bg-faded">
+          <%= yield %>
+        </div>
+      </div>
     </div>
   </body>
 </html>
