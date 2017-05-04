@@ -1,0 +1,14 @@
+<h3 class="card-title">My Campaigns</h3>
+<div>
+	<%= link_to "Create Campaign", new_campaign_path, class: "btn btn-primary btn-sm" %>
+</div>
+<hr />
+<% if @user_campaigns.size > 0 %>
+<% @user_campaigns.each do |campaign| %>
+	<a class="btn btn-secondary btn-block" href="<%= campaign_path(campaign) %>"><%= campaign.name %></a>
+<% end %>
+<% else %>
+<div class="card-block">
+	<p class="card-text">You do not currently have any campaigns.</p>
+</div>
+<% end %>

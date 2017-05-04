@@ -1,0 +1,14 @@
+<h3 class="card-title"><%= @campaign.name %></h3>
+<% if @role == "owner" %>
+<div class="card-block row">
+	<div class="col col-auto"><strong>Users</strong>:</div>
+	<div class="col">
+		<p class="card-text"><%= @campaign.permissions.map(&:email).join(", ") %></p>
+		<%= form_tag(campaign_permissions_path(@campaign.id), class: "form-inline") do %>
+			<input type="text" name="email" id="email" placeholder="Email" class="form-control form-control-sm" />
+			&nbsp;
+			<button type="submit" class="btn btn-primary btn-sm">Add User</button>
+		<% end %>
+	</div>
+</div>
+<% end %>
