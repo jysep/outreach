@@ -10,13 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170504231947) do
+ActiveRecord::Schema.define(version: 20170507164335) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "campaigns", id: :string, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["id"], name: "sqlite_autoindex_campaigns_1", unique: true
   end
 
   create_table "entries", force: :cascade do |t|
@@ -31,8 +33,8 @@ ActiveRecord::Schema.define(version: 20170504231947) do
     t.string "outcome"
     t.string "people"
     t.string "contact"
-    t.string "age_groups"
-    t.string "themes"
+    t.text "age_groups", default: [], array: true
+    t.text "themes", default: [], array: true
     t.string "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

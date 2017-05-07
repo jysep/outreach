@@ -5,18 +5,45 @@ class EntriesController < ApplicationController
 	end
 
 	def index
-		@campaign = Campaign.find(entry_params[:campaign_id])
+		begin
+			@campaign = Campaign.find(entry_params[:campaign_id])
+		rescue ActiveRecord::RecordNotFound
+			redirect_to '/'
+		end
 	end
 
 	def create
 		vals = entry_params
-		if current_user
-			vals[:user_email] = current_user.email
-		end
-		vals[:age_groups] = vals[:age_groups].join(",") unless vals[:age_groups].nil?
-		vals[:themes] = vals[:themes].join(",") unless vals[:themes].nil?
+		vals[:user_email] = current_user.email if current_user
 		Entry.create!(vals)
 		redirect_to action: :index
+	end
+
+	def submit
+		successes = {}
+		submitparams = params.permit(:entries, :campaign_id)
+		params[:entries].each do |entry|
+			data = entry.require(:entry).permit(
+				:team,
+				:date,
+				:time,
+				:street,
+				:street_number,
+				:unit_number,
+				:outcome,
+				:people,
+				:contact,
+				:notes,
+				:age_groups,
+				:themes,
+			)
+			data[:campaign_id] = params[:campaign_id]
+			data[:user_email] = current_user.email
+			if Entry.create(data)
+				successes[entry[:timestamp]] = true
+			end
+		end
+		render json: {successes: successes}
 	end
 
 	def update

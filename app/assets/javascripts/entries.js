@@ -16,7 +16,10 @@ $(function() {
 		console.log("Loading from local storage")
 		console.log(localStorage[campaignID]);
 		unsentEntries = JSON.parse(localStorage[campaignID]);
-		unsentCount = JSON.parse(localStorage[campaignID]);
+	}
+
+	if (unsentEntries.length > 0) {
+		sendEntries(maxTries);
 	}
 
 	function storeEntry(entry) {
@@ -24,9 +27,9 @@ $(function() {
 			"timestamp": Date.now(),
 			"entry": entry
 		});
-		console.log("updating local storage");
-		console.log(JSON.stringify(unsentEntries));
 		if (hasLocalStorage()) {
+			console.log("updating local storage");
+			console.log(JSON.stringify(unsentEntries));
 			localStorage[campaignID] = JSON.stringify(unsentEntries);
 		}
 		if (!isSending) {
@@ -41,6 +44,8 @@ $(function() {
 			}
 		}
 		if (hasLocalStorage()) {
+			console.log("updating local storage");
+			console.log(JSON.stringify(unsentEntries));
 			localStorage[campaignID] = JSON.stringify(unsentEntries);
 		}
 	}
@@ -52,11 +57,12 @@ $(function() {
 			return;
 		}
 		$.ajax({
-			"data": unsentEntries,
+			"contentType": "application/json",
+			"data": JSON.stringify({"entries": unsentEntries}),
 			"dataType": "json",
 			"type": "POST",
 			"timeout": 15000,
-			"url": location.href,
+			"url": location.href + '/submit',
 			"error": function(xhr, status, err) {
 				if (tries == 0) {
 					isSending = false;
@@ -68,7 +74,9 @@ $(function() {
 				}
 			},
 			"success": function(data, status, xhr) {
-				clearSent(data.created);
+				console.log("Submit response:");
+				console.log(data);
+				clearSent(data.successes);
 				sendEntries(maxTries);
 			}
 		});
