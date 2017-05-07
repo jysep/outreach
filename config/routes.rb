@@ -13,5 +13,4 @@ Rails.application.routes.draw do
   root to: "home#show"
 
   get 'hello_world', to: 'hello_world#index'
-  get 'entry', to: 'data_entry#index'
 end

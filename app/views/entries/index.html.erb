@@ -1,33 +1,33 @@
 <h3 class="card-title"><%= @campaign.name %></h3>
-<%= form_tag(campaign_entries_path(@campaign.id)) do %>
+<%= form_tag(campaign_entries_path(@campaign.id), id: "entries-form") do %>
 	<div class="row">
 		<div class="form-group col-lg">
 			<label for="team-members">Team Members:</label>
-			<input type="text" class="form-control" name="team" id="team-members" placeholder="Team Members" />
+			<input type="text" class="form-control" name="team" id="team-members" placeholder="Team Members" autocomplete="off" />
 		</div>
 		<div class="form-group col-lg">
 			<label for="date">Date:</label>
-			<input type="date" class="form-control" name="date" id="date" value="<%= Date.today.strftime('%Y-%m-%d') %>" />
+			<input type="date" class="form-control" name="date" id="date" value="<%= Date.today.strftime('%Y-%m-%d') %>" autocomplete="off" />
 		</div>
 	</div>
 	<hr />
 	<div class="form-group">
 		<label for="street">Street:</label>
-		<input type="text" class="form-control" name="street" id="street" placeholder="Street" />
+		<input type="text" class="form-control" name="street" id="street" placeholder="Street" autocomplete="off" />
 	</div>
 	<div class="row">
 		<div class="form-group col">
 			<label for="street-number">Street Number:</label>
-			<input type="text" class="form-control" name="street_number" id="street-number" placeholder="Street Number" />
+			<input type="text" class="form-control" name="street_number" id="street-number" placeholder="Street Number" autocomplete="off" />
 		</div>
 		<div class="form-group col">
 			<label for="unit">Apartment/Unit:</label>
-			<input type="text" class="form-control" name="unit_number" id="unit" placeholder="Apartment/Unit" />
+			<input type="text" class="form-control" name="unit_number" id="unit" placeholder="Apartment/Unit" autocomplete="off" />
 		</div>
 	</div>
 	<div class="form-group">
 		<label for="outcome">Outcome:</label>
-		<select class="form-control" name="outcome">
+		<select class="form-control" name="outcome" id="outcome">
 			<option value="">Please Select</option>
 			<option value="not home">Not Home</option>
 			<option value="not visited">Not Visited</option>
@@ -37,31 +37,31 @@
 		</select>
 	</div>
 	<div class="form-group">
-		<label for="people-met">People Met:</label>
-		<input type="text" class="form-control" name="people" id="people-met" placeholder="Names of People Met" />
+		<label for="people">People Met:</label>
+		<input type="text" class="form-control" name="people" id="people" placeholder="Names of People Met" autocomplete="off" />
 	</div>
 	<div class="form-group">
 		<label for="contact">Contact Information:</label>
-		<input type="text" class="form-control" name="contact" id="contact" placeholder="Phone/Email" />
+		<input type="text" class="form-control" name="contact" id="contact" placeholder="Phone/Email" autocomplete="off" />
 	</div>
 	<div class="form-group row">
 		<div class="col col-auto">Age Groups:</div>
 		<div class="col">
 			<div class="form-check">
 				<label class="form-check-label">
-					<input type="checkbox" class="form-check-input" id="children" name="age_groups[]" value="1" />
+					<input type="checkbox" class="form-check-input age-groups" name="age_groups[]" value="1" />
 					Children
 				</label>
 			</div>
 			<div class="form-check">
 				<label class="form-check-label">
-					<input type="checkbox" class="form-check-input" id="junior-youth" name="age_groups[]" value="2" />
+					<input type="checkbox" class="form-check-input age-groups" name="age_groups[]" value="2" />
 					Junior Youth
 				</label>
 			</div>
 			<div class="form-check">
 				<label class="form-check-label">
-					<input type="checkbox" class="form-check-input" id="youth" name="age_groups[]" value="3" />
+					<input type="checkbox" class="form-check-input age-groups" name="age_groups[]" value="3" />
 					Youth
 				</label>
 			</div>
@@ -71,79 +71,79 @@
 		Conversation Themes Covered:
 		<div class="form-check">
 			<label class="form-check-label">
-				<input type="checkbox" class="form-check-input" id="children" name="themes[]" value="1" />
+				<input type="checkbox" class="form-check-input themes" name="themes[]" value="1" />
 				Walking a Path of Service
 			</label>
 		</div>
 		<div class="form-check">
 			<label class="form-check-label">
-				<input type="checkbox" class="form-check-input" id="children" name="themes[]" value="2" />
+				<input type="checkbox" class="form-check-input themes" name="themes[]" value="2" />
 				Period of Youth
 			</label>
 		</div>
 		<div class="form-check">
 			<label class="form-check-label">
-				<input type="checkbox" class="form-check-input" id="children" name="themes[]" value="3" />
+				<input type="checkbox" class="form-check-input themes" name="themes[]" value="3" />
 				Twofold Moral Purpose
 			</label>
 		</div>
 		<div class="form-check">
 			<label class="form-check-label">
-				<input type="checkbox" class="form-check-input" id="children" name="themes[]" value="4" />
+				<input type="checkbox" class="form-check-input themes" name="themes[]" value="4" />
 				Constructive and Destructive Forces
 			</label>
 		</div>
 		<div class="form-check">
 			<label class="form-check-label">
-				<input type="checkbox" class="form-check-input" id="children" name="themes[]" value="5" />
+				<input type="checkbox" class="form-check-input themes" name="themes[]" value="5" />
 				Material and Spiritual Progress
 			</label>
 		</div>
 		<div class="form-check">
 			<label class="form-check-label">
-				<input type="checkbox" class="form-check-input" id="children" name="themes[]" value="6" />
+				<input type="checkbox" class="form-check-input themes" name="themes[]" value="6" />
 				Individual and Collective Transformation
 			</label>
 		</div>
 		<div class="form-check">
 			<label class="form-check-label">
-				<input type="checkbox" class="form-check-input" id="children" name="themes[]" value="7" />
+				<input type="checkbox" class="form-check-input themes" name="themes[]" value="7" />
 				A United Community
 			</label>
 		</div>
 		<div class="form-check">
 			<label class="form-check-label">
-				<input type="checkbox" class="form-check-input" id="children" name="themes[]" value="8" />
+				<input type="checkbox" class="form-check-input themes" name="themes[]" value="8" />
 				Community Building
 			</label>
 		</div>
 		<div class="form-check">
 			<label class="form-check-label">
-				<input type="checkbox" class="form-check-input" id="children" name="themes[]" value="9" />
+				<input type="checkbox" class="form-check-input themes" name="themes[]" value="9" />
 				Service to the Community
 			</label>
 		</div>
 		<div class="form-check">
 			<label class="form-check-label">
-				<input type="checkbox" class="form-check-input" id="children" name="themes[]" value="10" />
+				<input type="checkbox" class="form-check-input themes" name="themes[]" value="10" />
 				Early Adolescence
 			</label>
 		</div>
 		<div class="form-check">
 			<label class="form-check-label">
-				<input type="checkbox" class="form-check-input" id="children" name="themes[]" value="11" />
+				<input type="checkbox" class="form-check-input themes" name="themes[]" value="11" />
 				Educating Younger Generations
 			</label>
 		</div>
 		<div class="form-check">
 			<label class="form-check-label">
-				<input type="checkbox" class="form-check-input" id="children" name="themes[]" value="12" />
+				<input type="checkbox" class="form-check-input themes" name="themes[]" value="12" />
 				Institute Process
 			</label>
 		</div>
 		<div class="form-check">
 			<label class="form-check-label">
-				<input type="checkbox" class="form-check-input" id="children" name="themes[]" value="13" />
+				<input type="checkbox" class="form-check-input themes" name="themes[]" value="13" />
 				The Baha'i Faith
 			</label>
 		</div>
