@@ -1,7 +1,9 @@
 $(function() {
 	if (location.href.indexOf("/campaigns/") == -1 || location.href.indexOf("/entries") == -1) {
+		console.log("Not Entry Page");
 		return;
 	}
+	console.log("Connecting Form");
 	var campaignID = location.href.split("/campaigns/")[1].split("/entries")[0];
 	console.log("campaign: "+campaignID);
 
@@ -186,4 +188,5 @@ $(function() {
 
 		return false;
 	});
+	console.log("Form Bound");
 });
