@@ -62,9 +62,9 @@ $(function() {
 					isSending = false;
 				} else {
 					tries--;
-					setTimeout(1000, function() {
+					setTimeout(function() {
 						sendEntries(tries);
-					});
+					}, 1000);
 				}
 			},
 			"success": function(data, status, xhr) {
@@ -76,15 +76,15 @@ $(function() {
 
 	function formEntry(form) {
 		return {
-			"team": form.find("#team").val(),
-			"date": form.find("#date").val(),
-			"street": form.find("#street").val(),
-			"street_number": form.find("#street-number").val(),
-			"unit_number": form.find("#unit").val(),
+			"team": $.trim(form.find("#team").val()),
+			"date": $.trim(form.find("#date").val()),
+			"street": $.trim(form.find("#street").val()),
+			"street_number": $.trim(form.find("#street-number").val()),
+			"unit_number": $.trim(form.find("#unit").val()),
 			"outcome": form.find("#outcome").val(),
-			"people": form.find("#people").val(),
-			"contact": form.find("#contact").val(),
-			"notes": form.find("#notes").val(),
+			"people": $.trim(form.find("#people").val()),
+			"contact": $.trim(form.find("#contact").val()),
+			"notes": $.trim(form.find("#notes").val()),
 			"age_groups": form.find(".age-groups:checked").map(function(i, el){return $(el).val()}).get(),
 			"themes": form.find(".themes:checked").map(function(i, el){return $(el).val()}).get()
 		};
@@ -117,16 +117,61 @@ $(function() {
 		var $el = $('<div class="alert alert-fixed alert-success" role="alert"><strong>Saved!</strong></div>');
 		$("body").append($el);
 		setTimeout(function() {
-			console.log("here");
 			$el.hide('slow', function() { $el.remove(); });
 		}, 500);
 	}
 
+	function showError(msg, target) {
+		var top = target.parent().offset().top;
+		if (top < 50) {
+			top = 0;
+		} else {
+			top = top - 50;
+		}
+		$('html, body').animate({
+			scrollTop: top
+		}, 200);
+
+		var $el = $('<div class="alert alert-fixed alert-danger" role="alert"></div>');
+		$el.text(msg);
+		$("body").append($el);
+		setTimeout(function() {
+			$el.hide('slow', function() { $el.remove(); });
+		}, 3000);
+		target.focus();
+	}
+
+	function validate(form, entry) {
+		if (entry.team.length == 0) {
+			showError("Team Members cannot be blank", form.find("#team"));
+			return false;
+		}
+		if (entry.date.length == 0) {
+			showError("Date cannot be blank", form.find("#date"));
+			return false;
+		}
+		if (entry.street.length == 0) {
+			showError("Street cannot be blank", form.find("#street"));
+			return false;
+		}
+		if (entry.street_number.length == 0) {
+			showError("Street Number cannot be blank", form.find("#street-number"));
+			return false;
+		}
+		if (entry.outcome.length == 0) {
+			showError("Outcome must be selected", form.find("#outcome"));
+			return false;
+		}
+		return true;
+	}
 
 	$("#entries-form").submit(function(e) {
 		e.preventDefault();
 		var $this = $(this);
 		var entry = formEntry($this);
+		if (!validate($this, entry)) {
+			return;
+		}
 		storeEntry(entry);
 		showSuccess();
 		resetForm($this, entry);
