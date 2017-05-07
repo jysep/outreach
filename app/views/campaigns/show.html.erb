@@ -11,7 +11,29 @@
 		<% end %>
 	</div>
 </div>
+<% end %>
 <div class="card-block">
 	<strong>Data Entry Form:</strong> <%= link_to campaign_entries_url(@campaign.id), campaign_entries_path(@campaign.id) %>
 </div>
-<% end %>
+<div class="card-block">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Team</th>
+				<th>Address</th>
+				<th>People</th>
+				<th>Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @entries.each do |entry| %>
+			<tr>
+				<td><%= entry.team %></td>
+				<td><%= entry.street_number %> <%= entry.street %> <%= '#' + entry.unit_number if entry.unit_number %></td>
+				<td><%= entry.people %></td>
+				<td><%= entry.date %></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

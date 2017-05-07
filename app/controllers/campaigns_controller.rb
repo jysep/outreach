@@ -18,6 +18,7 @@ class CampaignsController < ApplicationController
 
 	def show
 		@campaign = Campaign.find(params[:id])
+		@entries = @campaign.entries.order(created_at: :desc).to_a
 		@role = @campaign.permissions.where(email: current_user.email).take.level
 	end
 

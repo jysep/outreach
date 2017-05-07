@@ -26,6 +26,20 @@ class EntriesController < ApplicationController
 	end
 
 	def entry_params
-		params.permit(:campaign_id, :team, :date, :time, :street, :street_number, :unit_number, :outcome, :people, :contact, :notes, :age_groups => [], :themes => [])
+		params.permit(
+			:campaign_id,
+			:team,
+			:date,
+			:time,
+			:street,
+			:street_number,
+			:unit_number,
+			:outcome,
+			:people,
+			:contact,
+			:notes,
+			:age_groups => [],
+			:themes => []
+		)
 	end
 end
