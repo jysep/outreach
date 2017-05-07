@@ -26,7 +26,9 @@ $(function() {
 		});
 		console.log("updating local storage");
 		console.log(JSON.stringify(unsentEntries));
-		localStorage[campaignID] = JSON.stringify(unsentEntries);
+		if (hasLocalStorage()) {
+			localStorage[campaignID] = JSON.stringify(unsentEntries);
+		}
 		if (!isSending) {
 			sendEntries(maxTries);
 		}
@@ -38,7 +40,9 @@ $(function() {
 				unsentEntries.splice(i, 1);
 			}
 		}
-		localStorage[campaignID] = JSON.stringify(unsentEntries);
+		if (hasLocalStorage()) {
+			localStorage[campaignID] = JSON.stringify(unsentEntries);
+		}
 	}
 
 	function sendEntries(tries) {
@@ -109,11 +113,22 @@ $(function() {
 		}
 	}
 
+	function showSuccess() {
+		var $el = $('<div class="alert alert-fixed alert-success" role="alert"><strong>Saved!</strong></div>');
+		$("body").append($el);
+		setTimeout(function() {
+			console.log("here");
+			$el.hide('slow', function() { $el.remove(); });
+		}, 500);
+	}
+
+
 	$("#entries-form").submit(function(e) {
 		e.preventDefault();
 		var $this = $(this);
 		var entry = formEntry($this);
 		storeEntry(entry);
+		showSuccess();
 		resetForm($this, entry);
 
 		return false;
