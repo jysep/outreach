@@ -1,4 +1,6 @@
+console.log("JS Loaded");
 $(function() {
+	console.log("In function");
 	if (location.href.indexOf("/campaigns/") == -1 || location.href.indexOf("/entries") == -1) {
 		console.log("Not Entry Page");
 		return;
