@@ -116,7 +116,7 @@ $(function() {
 		form.find(".themes").prop("checked", false);
 
 		$('html, body').animate({
-    	scrollTop: form.find("#street-number").parent().offset().top
+			scrollTop: form.find("#street-number").parent().offset().top - 50
 		}, 200);
 		if (entry.unit_number.length > 0) {
 			form.find("#unit").focus();
@@ -130,7 +130,7 @@ $(function() {
 		$("body").append($el);
 		setTimeout(function() {
 			$el.hide('slow', function() { $el.remove(); });
-		}, 500);
+		}, 1000);
 	}
 
 	function showError(msg, target) {
