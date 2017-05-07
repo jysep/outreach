@@ -1,5 +1,6 @@
 class EntriesController < ApplicationController
 	before_action :require_login, except: [:index, :create]
+	skip_before_action :verify_authenticity_token, only: [:submit]
 
 	def show
 	end
