@@ -193,7 +193,11 @@ $(function() {
 				$el.remove();
 			});
 		})
-		$(".card").before($el);
+		if ($('#sync-alert').length > 0) {
+			$('#sync-alert').replaceWith($el);
+		} else {
+			$(".card").before($el);
+		}
 	}
 
 	$("body").on("click", "#entry-submit", function(e) {
