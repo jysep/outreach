@@ -37,7 +37,7 @@ class EntriesController < ApplicationController
 				:themes => [],
 			)
 			data[:campaign_id] = params[:campaign_id]
-			data[:user_email] = current_user.email
+			data[:user_email] = current_user.email if current_user
 			if Entry.create(data)
 				successes[entry[:timestamp]] = true
 			end
