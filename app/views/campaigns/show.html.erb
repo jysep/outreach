@@ -20,6 +20,7 @@
 		<thead>
 			<tr>
 				<th>Team</th>
+				<th>Outcome</th>
 				<th>Address</th>
 				<th>People</th>
 				<th>Date</th>
@@ -29,6 +30,7 @@
 			<% @entries.each do |entry| %>
 			<tr>
 				<td><%= entry.team %></td>
+				<td><%= Entry::OUTCOMES[entry.outcome] %></td>
 				<td><%= entry.street_number %> <%= entry.street %> <%= '#' + entry.unit_number if entry.unit_number %></td>
 				<td><%= entry.people %></td>
 				<td><%= entry.date %></td>
