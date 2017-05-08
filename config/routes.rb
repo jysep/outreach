@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resource :home, only: [:show]
   resources :campaigns, only: [:index, :create, :new, :show, :destroy] do
     resources :permissions, only: [:create]
-    resources :entries, only: [:index, :show, :create, :update] do
+    resources :entries, only: [:index, :show, :update] do
       post 'submit', on: :collection
     end
   end

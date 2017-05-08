@@ -174,9 +174,9 @@ $(function() {
 		return true;
 	}
 
-	$("#entries-form").submit(function(e) {
+	$("#entry-submit").click(function(e) {
 		e.preventDefault();
-		var $this = $(this);
+		var $this = $(this).parents("form");
 		var entry = formEntry($this);
 		if (!validate($this, entry)) {
 			return;

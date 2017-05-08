@@ -13,13 +13,6 @@ class EntriesController < ApplicationController
 		end
 	end
 
-	def create
-		vals = entry_params
-		vals[:user_email] = current_user.email if current_user
-		Entry.create!(vals)
-		redirect_to action: :index
-	end
-
 	def submit
 		successes = {}
 		submitparams = params.permit(:entries, :campaign_id)
