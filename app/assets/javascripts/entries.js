@@ -1,5 +1,4 @@
 $(function() {
-	console.log("Loading entries script");
 	if (location.href.indexOf("/campaigns/") == -1 || location.href.indexOf("/entries") == -1) {
 		return;
 	}
@@ -20,7 +19,7 @@ $(function() {
 	}
 
 	if (unsentEntries.length > 0) {
-		sendEntries(maxTries);
+		showSync();
 	}
 
 	function storeEntry(entry) {
@@ -34,7 +33,7 @@ $(function() {
 			localStorage[campaignID] = JSON.stringify(unsentEntries);
 		}
 		if (!isSending) {
-			sendEntries(maxTries);
+			sendEntries(maxTries, null);
 		}
 	}
 
@@ -51,7 +50,7 @@ $(function() {
 		}
 	}
 
-	function sendEntries(tries) {
+	function sendEntries(tries, cb) {
 		isSending = true;
 		if (unsentEntries.length == 0) {
 			isSending = false;
@@ -67,10 +66,11 @@ $(function() {
 			"error": function(xhr, status, err) {
 				if (tries == 0) {
 					isSending = false;
+					showSync();
 				} else {
 					tries--;
 					setTimeout(function() {
-						sendEntries(tries);
+						sendEntries(tries, cb);
 					}, 1000);
 				}
 			},
@@ -78,7 +78,10 @@ $(function() {
 				console.log("Submit response:");
 				console.log(data);
 				clearSent(data.successes);
-				sendEntries(maxTries);
+				if (cb != null && cb != undefined) {
+					cb();
+				}
+				sendEntries(maxTries, null);
 			}
 		});
 	}
@@ -122,8 +125,8 @@ $(function() {
 		}
 	}
 
-	function showSuccess() {
-		var $el = $('<div class="alert alert-fixed alert-success" role="alert"><strong>Saved!</strong></div>');
+	function showSuccess(msg) {
+		var $el = $('<div class="alert alert-fixed alert-success" role="alert"><strong>'+msg+'</strong></div>');
 		$("body").append($el);
 		setTimeout(function() {
 			$el.hide('slow', function() { $el.remove(); });
@@ -174,6 +177,25 @@ $(function() {
 		return true;
 	}
 
+	function showSync() {
+		var entryNum;
+		if (unsentEntries.length == 0) {
+			return;
+		} else if (unsentEntries.length == 1) {
+			entryNum = "1 unsynced entry";
+		} else {
+			entryNum = unsentEntries.length + " unsynced entries"
+		}
+		$el = $("<div class='alert alert-warning' id='sync-alert'><button class='btn btn-warning'>Sync With Server</button> <span><strong>You have "+entryNum+".</strong></span></div>");
+		$el.find("button").click(function() {
+			sendEntries(maxTries, function() {
+				showSuccess("Synced!");
+				$el.remove();
+			});
+		})
+		$(".card").before($el);
+	}
+
 	$("#entry-submit").click(function(e) {
 		e.preventDefault();
 		var $this = $(this).parents("form");
@@ -182,7 +204,7 @@ $(function() {
 			return;
 		}
 		storeEntry(entry);
-		showSuccess();
+		showSuccess("Saved!");
 		resetForm($this, entry);
 
 		return false;
