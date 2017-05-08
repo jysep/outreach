@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :entries, only: [:index] do
       post 'submit', on: :collection
     end
+    get 'export', on: :member
   end
   resources :entries, only: [:show, :update]
 

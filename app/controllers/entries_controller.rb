@@ -33,8 +33,8 @@ class EntriesController < ApplicationController
 				:people,
 				:contact,
 				:notes,
-				:age_groups,
-				:themes,
+				:age_groups => [],
+				:themes => [],
 			)
 			data[:campaign_id] = params[:campaign_id]
 			data[:user_email] = current_user.email

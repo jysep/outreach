@@ -1,4 +1,5 @@
 <h3 class="card-title"><%= @campaign.name %></h3>
+<%= link_to "Export Spreadsheet", export_campaign_path(@campaign.id), target: "_blank", class: "btn btn-primary" %>
 <% if @role == "owner" %>
 <div class="card-block row">
 	<div class="col col-auto"><strong>Users</strong>:</div>
