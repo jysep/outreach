@@ -196,7 +196,7 @@ $(function() {
 		$(".card").before($el);
 	}
 
-	$("#entry-submit").click(function(e) {
+	$("body").on("click", "#entry-submit", function(e) {
 		e.preventDefault();
 		var $this = $(this).parents("form");
 		var entry = formEntry($this);
