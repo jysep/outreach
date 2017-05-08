@@ -6,3 +6,11 @@
   z-index:9999;
   border-radius:0px
 }
+
+#entry-links tbody tr {
+  cursor: pointer;
+}
+
+#entry-links tbody tr:hover {
+  background-color: #eee;
+}

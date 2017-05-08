@@ -1,0 +1,35 @@
+<h3 class="card-title"><%= link_to "< "+ @campaign.name, campaign_path(@campaign.id) %></h3>
+<dl>
+	<dt>Team Members:</dt>
+	<dd><%= @entry.team %></dd>
+
+	<dt>Date:</dt>
+	<dd><%= @entry.date %></dd>
+
+	<dt>Street:</dt>
+	<dd><%= @entry.street %></dd>
+
+	<dt>Street Number:</dt>
+	<dd><%= @entry.street_number %></dd>
+
+	<dt>Unit:</dt>
+	<dd><%= @entry.unit_number.blank? ? "-" : @entry.unit_number %></dd>
+
+	<dt>Outcome:</dt>
+	<dd><%= Entry::OUTCOMES[@entry.outcome] %></dd>
+
+	<dt>People Met:</dt>
+	<dd><%= @entry.people.blank? ? "-" : @entry.people %></dd>
+
+	<dt>Contact Information:</dt>
+	<dd><%= @entry.contact.blank? ? "-" : @entry.contact %></dd>
+
+	<dt>Age Groups:</dt>
+	<dd><%= @entry.age_groups.empty? ? "-" : @entry.age_groups.map {|a| Entry::AGE_GROUPS[a]}.join(",") %></dd>
+
+	<dt>Conversation Themes Covered:</dt>
+	<dd><%= @entry.themes.empty? ? "-" : @entry.themes.map {|a| Entry::THEMES[a]}.join(",") %></dd>
+
+	<dt>Notes:</dt>
+	<dd><%=simple_format @entry.notes.blank? ? "-" : @entry.notes %></dd>
+</dl>

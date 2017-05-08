@@ -16,7 +16,7 @@
 	<strong>Data Entry Form:</strong> <%= link_to campaign_entries_url(@campaign.id), campaign_entries_path(@campaign.id) %>
 </div>
 <div class="card-block">
-	<table class="table">
+	<table class="table" id="entry-links">
 		<thead>
 			<tr>
 				<th>Team</th>
@@ -28,7 +28,7 @@
 		</thead>
 		<tbody>
 			<% @entries.each do |entry| %>
-			<tr>
+			<tr data-href="<%= entry_path(entry.id) %>">
 				<td><%= entry.team %></td>
 				<td><%= Entry::OUTCOMES[entry.outcome] %></td>
 				<td><%= entry.street_number %> <%= entry.street %> <%= '#' + entry.unit_number if entry.unit_number %></td>

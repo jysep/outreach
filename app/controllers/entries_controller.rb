@@ -1,8 +1,10 @@
 class EntriesController < ApplicationController
-	before_action :require_login, except: [:index, :create]
+	before_action :require_login, except: [:index, :submit]
 	skip_before_action :verify_authenticity_token, only: [:submit]
 
 	def show
+		@entry = Entry.find(params[:id])
+		@campaign = @entry.campaign
 	end
 
 	def index
