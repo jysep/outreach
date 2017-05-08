@@ -5,6 +5,9 @@ class EntriesController < ApplicationController
 	def show
 		@entry = Entry.find(params[:id])
 		@campaign = @entry.campaign
+		unless @campaign.permissions.where(email: current_user.email).exists?
+			redirect_to '/'
+		end
 	end
 
 	def index

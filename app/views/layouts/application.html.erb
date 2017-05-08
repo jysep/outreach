@@ -28,6 +28,9 @@
         <ul class="navbar-nav">
           <% if current_user %>
           <li class="nav-item">
+            <%= link_to "My Campaigns", campaigns_path, id: "my-campagins", class: "nav-link" %>
+          </li>
+          <li class="nav-item">
             <%= link_to "Sign Out", signout_path, id: "sign-out", class: "nav-link" %>
           </li>
           <% end %>
