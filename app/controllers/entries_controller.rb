@@ -45,7 +45,23 @@ class EntriesController < ApplicationController
 		render json: {successes: successes}
 	end
 
+	def edit
+		@entry = Entry.find(params[:id])
+		@campaign = @entry.campaign
+		unless @campaign.permissions.where(email: current_user.email).exists?
+			redirect_to '/'
+		end
+	end
+
 	def update
+		@entry = Entry.find(params[:id])
+		@campaign = @entry.campaign
+		unless @campaign.permissions.where(email: current_user.email).exists?
+			redirect_to '/'
+		end
+
+		@entry.update!(entry_params)
+		redirect_to action: :show, id: params[:id]
 	end
 
 	def destroy

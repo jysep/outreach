@@ -1,0 +1,76 @@
+<h3 class="card-title"><%= @campaign.name %></h3>
+<%= form_tag(entry_path(@entry.id), method: "PUT") do %>
+	<div class="row">
+		<div class="form-group col-lg">
+			<label for="team">Team Members:</label>
+			<input type="text" class="form-control" name="team" id="team" placeholder="Team Members" autocomplete="off" value="<%= @entry.team %>" />
+		</div>
+		<div class="form-group col-lg">
+			<label for="date">Date:</label>
+			<input type="date" class="form-control" name="date" id="date" value="<%= Date.today.strftime('%Y-%m-%d') %>" autocomplete="off"  value="<%= @entry.date %>" />
+		</div>
+	</div>
+	<hr />
+	<div class="form-group">
+		<label for="street">Street:</label>
+		<input type="text" class="form-control" name="street" id="street" placeholder="Street" autocomplete="off" value="<%= @entry.street %>" />
+	</div>
+	<div class="row">
+		<div class="form-group col">
+			<label for="street-number">Street Number:</label>
+			<input type="text" class="form-control" name="street_number" id="street-number" placeholder="Street Number" autocomplete="off" value="<%= @entry.street_number %>" />
+		</div>
+		<div class="form-group col">
+			<label for="unit">Apartment/Unit:</label>
+			<input type="text" class="form-control" name="unit_number" id="unit" placeholder="Apartment/Unit" autocomplete="off" value="<%= @entry.unit_number %>" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="outcome">Outcome:</label>
+		<select class="form-control" name="outcome" id="outcome">
+			<option value="">Please Select</option>
+			<% Entry::OUTCOMES.each do |id, outcome| %>
+			<option value="<%= id %>"<%= ' selected="selected"' if @entry.outcome == id %>><%= outcome %></option>
+			<% end %>
+		</select>
+	</div>
+	<div class="form-group">
+		<label for="people">People Met:</label>
+		<input type="text" class="form-control" name="people" id="people" placeholder="Names of People Met" autocomplete="off" value="<%= @entry.people %>" />
+	</div>
+	<div class="form-group">
+		<label for="contact">Contact Information:</label>
+		<input type="text" class="form-control" name="contact" id="contact" placeholder="Phone/Email" autocomplete="off" value="<%= @entry.contact %>" />
+	</div>
+	<div class="form-group row">
+		<div class="col col-auto">Age Groups:</div>
+		<div class="col">
+			<% Entry::AGE_GROUPS.each do |id, group| %>
+			<div class="form-check">
+				<label class="form-check-label">
+					<input type="checkbox" class="form-check-input age-groups" name="age_groups[]" value="<%= id %>" id="age-group-<%= id %>"<%= ' checked="checked"' if @entry.age_groups.include?(id) %> />
+					<%= group %>
+				</label>
+			</div>
+			<% end %>
+		</div>
+	</div>
+	<div class="form-group">
+		Conversation Themes Covered:
+		<% Entry::THEMES.each do |id, theme| %>
+		<div class="form-check">
+			<label class="form-check-label">
+				<input type="checkbox" class="form-check-input themes" name="themes[]" value="<%= id %>" id="theme-<%= id %>"<%= ' checked="checked"' if @entry.age_groups.include?(id) %> />
+				<%= theme %>
+			</label>
+		</div>
+		<% end %>
+	</div>
+	<div class="form-group">
+		<label for="notes">Notes:</label>
+		<textarea name="notes" id="notes" class="form-control" placeholder="Notes" rows="4"><%= @entry.notes %></textarea>
+	</div>
+	<div class="form-group">
+		<button class="btn btn-primary right" type="submit">Update</button>
+	</div>
+<% end %>
