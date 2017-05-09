@@ -4,6 +4,9 @@ class Entry < ApplicationRecord
 		"2" => "Not Visited",
 		"3" => "No Answer",
 		"4" => "Not Interested",
+		"6" => "No Children/Youth",
+		"7" => "Visited",
+		"8" => "Revisit",
 		"5" => "Interested"
 	}
 	AGE_GROUPS = {
