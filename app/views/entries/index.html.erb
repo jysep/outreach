@@ -48,7 +48,7 @@
 			<% Entry::AGE_GROUPS.each do |id, group| %>
 			<div class="form-check">
 				<label class="form-check-label">
-					<input type="checkbox" class="form-check-input age-groups" name="age_groups[]" value="<%= id %>" />
+					<input type="checkbox" class="form-check-input age-groups" name="age_groups[]" value="<%= id %>" id="age-group-<%= id %>" />
 					<%= group %>
 				</label>
 			</div>
@@ -60,7 +60,7 @@
 		<% Entry::THEMES.each do |id, theme| %>
 		<div class="form-check">
 			<label class="form-check-label">
-				<input type="checkbox" class="form-check-input themes" name="themes[]" value="<%= id %>" />
+				<input type="checkbox" class="form-check-input themes" name="themes[]" value="<%= id %>" id="theme-<%= id %>" />
 				<%= theme %>
 			</label>
 		</div>

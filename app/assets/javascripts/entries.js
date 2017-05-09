@@ -115,6 +115,10 @@ $(function() {
 		form.find(".age-groups").prop("checked", false);
 		form.find(".themes").prop("checked", false);
 
+		$("#entries-form input, #entries-form select, #entries-form textarea").each(function(i, el) {
+			storeVal(el);
+		});
+
 		$('html, body').animate({
 			scrollTop: form.find("#street-number").parent().offset().top - 50
 		}, 200);
@@ -212,5 +216,42 @@ $(function() {
 		resetForm($this, entry);
 
 		return false;
+	});
+
+
+	if (hasLocalStorage()) {
+		$("#entries-form input, #entries-form select, #entries-form textarea").each(function(i, el) {
+			var $el = $(el);
+			var id = $el.attr('id');
+			if (id == "date") {
+				return;
+			}
+			if (localStorage["form-"+id] != undefined) {
+				if ($el.attr('type') == 'checkbox') {
+					$el.prop('checked', true);
+				} else {
+					$el.val(localStorage["form-"+id]);
+				}
+			}
+		});
+	}
+
+	function storeVal(el) {
+		var $el = $(el);
+		if (hasLocalStorage()) {
+			if ($el.attr('type') == 'checkbox') {
+				if (el.checked) {
+					localStorage["form-"+$el.attr("id")] = "checked";
+				} else {
+					localStorage.removeItem("form-"+$el.attr("id"));
+				}
+			} else {
+				localStorage["form-"+$el.attr("id")] = $el.val();
+			}
+		}
+	}
+
+	$("#entries-form input, #entries-form select, #entries-form textarea").on("change keyup", function() {
+		storeVal(this);
 	});
 });
