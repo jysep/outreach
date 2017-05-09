@@ -1,5 +1,5 @@
 $(function() {
-	if (location.href.indexOf("/campaigns/") == -1 || location.href.indexOf("/entries") == -1) {
+	if (/campaigns\/(\w+)\/entries$/.test(location.href)) {
 		return;
 	}
 	var campaignID = location.href.split("/campaigns/")[1].split("/entries")[0];
