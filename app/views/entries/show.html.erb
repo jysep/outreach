@@ -7,7 +7,7 @@
 	<dd><%= @entry.date %></dd>
 
 	<dt>Address:</dt>
-	<dd><%= @entry.street_number %> <%= @entry.street %> <%= "#"+@entry.unit_number if @entry.unit_number %></dd>
+	<dd><%= @entry.street_number %> <%= @entry.street %> <%= "#"+@entry.unit_number unless @entry.unit_number.blank? %></dd>
 
 	<dt>Outcome:</dt>
 	<dd><%= Entry::OUTCOMES[@entry.outcome] %></dd>

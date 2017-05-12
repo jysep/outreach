@@ -32,7 +32,7 @@
 			<tr data-href="<%= entry_path(entry.id) %>">
 				<td><%= entry.team %></td>
 				<td><%= Entry::OUTCOMES[entry.outcome] %></td>
-				<td><%= entry.street_number %> <%= entry.street %> <%= '#' + entry.unit_number if entry.unit_number %></td>
+				<td><%= entry.street_number %> <%= entry.street %> <%= '#' + entry.unit_number unless entry.unit_number.blank? %></td>
 				<td><%= entry.people %></td>
 				<td><%= entry.date %></td>
 			</tr>
