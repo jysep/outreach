@@ -20,16 +20,22 @@ class CampaignsController < ApplicationController
 
 	def show
 		@campaign = Campaign.find(params[:id])
-		unless @campaign.permissions.where(email: current_user.email).exists?
+		unless current_user.can_see?(@campaign)
 			redirect_to '/'
 			return
 		end
 		@entries = @campaign.entries.order(created_at: :desc).to_a
 		@role = @campaign.permissions.where(email: current_user.email).take.level
+		@campaign.check_duplicates
+		@duplicate_count = @campaign.duplicates.where(status: "potential").count
 	end
 
 	def export
 		@campaign = Campaign.find(params[:id])
+		unless current_user.can_see?(@campaign)
+			redirect_to '/'
+			return
+		end
 		@entries = @campaign.entries.order(created_at: :desc).to_a
 
 		csv_data = CSV.generate do |csv|

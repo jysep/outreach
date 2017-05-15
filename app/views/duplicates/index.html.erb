@@ -1,0 +1,28 @@
+<h3 class="card-title"><%= @campaign.name %> Potential Duplicates</h3>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>First Address</th>
+			<th>Second Address</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+	<% @duplicates.each do |duplicate| %>
+		<tr>
+			<td><%= duplicate.entry1.full_address %></td>
+			<td><%= duplicate.entry2.full_address %></td>
+			<td>
+				<div class="row">
+					<%= link_to "Merge", campaign_duplicate_path(@campaign.id, duplicate.id), class: "btn btn-primary" %>
+					&nbsp;
+					<%= form_tag(reject_campaign_duplicate_path(@campaign.id, duplicate.id), class: "form-inline") do %>
+						<button type="submit" class="btn btn-danger">Reject</button>
+					<% end %>
+				</div>
+			</td>
+		</tr>
+	<% end %>
+	</tbody>
+</table>

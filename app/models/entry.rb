@@ -31,6 +31,8 @@ class Entry < ApplicationRecord
 	}
 
 	belongs_to :campaign
+	has_many :duplicates, foreign_key: :entry1_id, dependent: :destroy
+	has_many :more_duplicates, class_name: "Duplicate", foreign_key: :entry2_id, dependent: :destroy
 	validates :team, presence: true
 	validates :date, presence: true
 	validates :street, presence: true
@@ -56,5 +58,9 @@ class Entry < ApplicationRecord
 	def uniq_arrays
 		self.age_groups.uniq!
 		self.themes.uniq!
+	end
+
+	def full_address
+		"#{street_number} #{street}" + (unit_number.blank? ? "" : " ##{unit_number}")
 	end
 end

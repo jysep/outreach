@@ -13,6 +13,11 @@
 	</div>
 </div>
 <% end %>
+<% if @duplicate_count > 0 %>
+<div class="card-block">
+	<%= link_to pluralize(@duplicate_count, "Potential Duplicate") + " (view)", campaign_duplicates_path(@campaign.id) %>
+</div>
+<% end %>
 <div class="card-block">
 	<strong>Data Entry Form:</strong> <%= link_to campaign_entries_url(@campaign.id), campaign_entries_path(@campaign.id) %>
 </div>
@@ -32,7 +37,7 @@
 			<tr data-href="<%= entry_path(entry.id) %>">
 				<td><%= entry.team %></td>
 				<td><%= Entry::OUTCOMES[entry.outcome] %></td>
-				<td><%= entry.street_number %> <%= entry.street %> <%= '#' + entry.unit_number unless entry.unit_number.blank? %></td>
+				<td><%= entry.full_address %></td>
 				<td><%= entry.people %></td>
 				<td><%= entry.date %></td>
 			</tr>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  entry1_id: 1
+  entry2_id: 1
+  status: MyText
+
+two:
+  entry1_id: 1
+  entry2_id: 1
+  status: MyText

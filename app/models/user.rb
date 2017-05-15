@@ -13,4 +13,12 @@ class User < ApplicationRecord
       user.save!
     end
   end
+
+	def can_see?(campaign)
+		campaign.permissions.where(email: email).exists?
+	end
+
+	def can_edit?(campaign)
+		campaign.permissions.where(email: email, level: "owner").exists?
+	end
 end

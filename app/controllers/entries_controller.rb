@@ -5,8 +5,9 @@ class EntriesController < ApplicationController
 	def show
 		@entry = Entry.find(params[:id])
 		@campaign = @entry.campaign
-		unless @campaign.permissions.where(email: current_user.email).exists?
+		unless current_user.can_see?(@campaign)
 			redirect_to '/'
+			return
 		end
 	end
 
@@ -48,16 +49,18 @@ class EntriesController < ApplicationController
 	def edit
 		@entry = Entry.find(params[:id])
 		@campaign = @entry.campaign
-		unless @campaign.permissions.where(email: current_user.email).exists?
+		unless current_user.can_see?(@campaign)
 			redirect_to '/'
+			return
 		end
 	end
 
 	def update
 		@entry = Entry.find(params[:id])
 		@campaign = @entry.campaign
-		unless @campaign.permissions.where(email: current_user.email).exists?
+		unless current_user.can_see?(@campaign)
 			redirect_to '/'
+			return
 		end
 
 		@entry.update!(entry_params)
