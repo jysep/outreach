@@ -25,9 +25,8 @@
 	<table class="table" id="entry-links">
 		<thead>
 			<tr>
-				<th>Team</th>
-				<th>Outcome</th>
 				<th>Address</th>
+				<th>Outcome</th>
 				<th>People</th>
 				<th>Date</th>
 			</tr>
@@ -35,9 +34,8 @@
 		<tbody>
 			<% @entries.each do |entry| %>
 			<tr data-href="<%= entry_path(entry.id) %>">
-				<td><%= entry.team %></td>
-				<td><%= Entry::OUTCOMES[entry.outcome] %></td>
 				<td><%= entry.full_address %></td>
+				<td><%= Entry::OUTCOMES[entry.outcome] %></td>
 				<td><%= entry.people %></td>
 				<td><%= entry.date %></td>
 			</tr>
