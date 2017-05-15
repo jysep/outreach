@@ -24,7 +24,7 @@ class CampaignsController < ApplicationController
 			redirect_to '/'
 			return
 		end
-		@entries = @campaign.entries.order(date: :desc, team: :desc).to_a
+		@entries = @campaign.entries.order(date: :desc, team: :desc, street: :desc, street_number: :desc, unit_number: :desc).to_a
 		@role = @campaign.permissions.where(email: current_user.email).take.level
 		@campaign.check_duplicates
 		@duplicate_count = @campaign.duplicates.where(status: "potential").count
