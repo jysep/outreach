@@ -16,7 +16,11 @@ class DuplicatesController < ApplicationController
 	def merge
 		@duplicate = Duplicate.find(params[:id])
 		Duplicate.transaction do
-			@duplicate.entry1.update(duplicate_params)
+			@duplicate.entry2.visits.update_all(entry_id: @duplicate.entry1.id)
+			@duplicate.entry1.update(duplicate_params.merge({
+				last_visit: @duplicate.visits.first.date,
+				last_outcome: @duplicate.outcome
+			}))
 			@duplicate.entry2.destroy
 		end
 		redirect_to action: :index, campaign_id: params[:campaign_id]
@@ -42,18 +46,12 @@ class DuplicatesController < ApplicationController
 
 	def duplicate_params
 		params.permit(
-			:team,
-			:date,
-			:time,
 			:street,
 			:street_number,
 			:unit_number,
-			:outcome,
 			:people,
 			:contact,
-			:notes,
 			:age_groups => [],
-			:themes => []
 		)
 	end
 end

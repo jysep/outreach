@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     get 'export', on: :member
   end
   resources :entries, only: [:show, :update, :edit]
+  resources :visits, only: [:edit, :update]
 
   root to: "home#show"
 

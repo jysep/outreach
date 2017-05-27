@@ -24,7 +24,7 @@ class CampaignsController < ApplicationController
 			redirect_to '/'
 			return
 		end
-		@entries = @campaign.entries.order(date: :desc, team: :desc, street: :desc, street_number: :desc, unit_number: :desc).to_a
+		@entries = @campaign.entries.order(last_visit: :desc, street: :desc, street_number: :desc, unit_number: :desc).to_a
 		@role = @campaign.permissions.where(email: current_user.email).take.level
 		@campaign.check_duplicates
 		@duplicate_count = @campaign.duplicates.where(status: "potential").count
@@ -42,17 +42,17 @@ class CampaignsController < ApplicationController
 		  csv << ["Date", "Team", "Street", "Street Number", "Unit", "Outcome", "People", "Contact", "Age Groups", "Themes", "Notes"]
 		  @entries.each do |entry|
 				csv << [
-					entry.date,
-					entry.team,
+					entry.last_visit,
+					entry.all_teams,
 					entry.street,
 					entry.street_number,
 					entry.unit_number,
-					Entry::OUTCOMES[entry.outcome],
+					entry.last_outcome_text,
 					entry.people,
 					entry.contact,
 					entry.age_groups.map{|a| Entry::AGE_GROUPS[a]}.join(", "),
-					entry.themes.map{|t| Entry::THEMES[t]}.join(", "),
-					entry.notes
+					entry.all_themes.map{|t| Visit::THEMES[t]}.join(", "),
+					entry.all_notes
 				]
 			end
 		end

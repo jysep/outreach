@@ -1,16 +1,10 @@
 <h3 class="card-title"><%= link_to "< "+ @campaign.name, campaign_path(@campaign.id) %></h3>
 <dl>
-	<dt>Team Members:</dt>
-	<dd><%= @entry.team %></dd>
-
-	<dt>Date:</dt>
-	<dd><%= @entry.date %></dd>
-
 	<dt>Address:</dt>
 	<dd><%= @entry.full_address %></dd>
 
-	<dt>Outcome:</dt>
-	<dd><%= Entry::OUTCOMES[@entry.outcome] %></dd>
+	<dt>Last Outcome:</dt>
+	<dd><%= @entry.last_outcome_text %></dd>
 
 	<dt>Residents:</dt>
 	<dd><%= @entry.people.blank? ? "-" : @entry.people %></dd>
@@ -19,12 +13,27 @@
 	<dd><%= @entry.contact.blank? ? "-" : @entry.contact %></dd>
 
 	<dt>Age Groups:</dt>
-	<dd><%= @entry.age_groups.empty? ? "-" : @entry.age_groups.map {|a| Entry::AGE_GROUPS[a]}.join(",") %></dd>
-
-	<dt>Conversation Themes Covered:</dt>
-	<dd><%= @entry.themes.empty? ? "-" : @entry.themes.map {|a| Entry::THEMES[a]}.join(",") %></dd>
-
-	<dt>Notes:</dt>
-	<dd><%=simple_format @entry.notes.blank? ? "-" : @entry.notes %></dd>
+	<dd><%= @entry.age_groups.empty? ? "-" : @entry.age_groups.map {|a| Entry::AGE_GROUPS[a]}.join(", ") %></dd>
 </dl>
 <%= link_to("Edit Entry", edit_entry_path(@entry.id), class: "btn btn-primary") %>
+
+<% @visits.each_with_index do |visit, i| %>
+<hr />
+<h4><%= (@visits.size - i).ordinalize %> Visit &nbsp;&nbsp;<%= link_to "Edit Visit", edit_visit_path(visit.id), class: "btn btn-sm btn-primary" %></h4>
+<dl>
+	<dt>Team Members:</dt>
+	<dd><%= visit.team %></dd>
+
+	<dt>Date:</dt>
+	<dd><%= visit.date %></dd>
+
+	<dt>Outcome:</dt>
+	<dd><%= visit.outcome_text %></dd>
+
+	<dt>Conversation Themes Covered:</dt>
+	<dd><%= visit.themes.empty? ? "-" : visit.themes.map {|a| Visit::THEMES[a]}.join(", ") %></dd>
+
+	<dt>Notes:</dt>
+	<dd><%=simple_format visit.notes.blank? ? "-" : visit.notes %></dd>
+</dl>
+<% end %>

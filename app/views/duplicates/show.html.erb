@@ -1,16 +1,5 @@
 <h3 class="card-title">Merge Duplicates</h3>
 <%= form_tag(merge_campaign_duplicate_path(@campaign.id, @duplicate.id)) do %>
-	<div class="row">
-		<div class="form-group col-lg">
-			<label for="team">Team Members:</label>
-			<input type="text" class="form-control" name="team" id="team" placeholder="Team Members" autocomplete="off" value="<%= @duplicate.team %>" />
-		</div>
-		<div class="form-group col-lg">
-			<label for="date">Date:</label>
-			<input type="date" class="form-control" name="date" id="date" value="<%= @duplicate.entry2.date %>" autocomplete="off" />
-		</div>
-	</div>
-	<hr />
 	<div class="form-group">
 		<label for="street">Street:</label>
 		<input type="text" class="form-control" name="street" id="street" placeholder="Street" autocomplete="off" value="<%= @duplicate.street %>" />
@@ -24,15 +13,6 @@
 			<label for="unit">Apartment/Unit:</label>
 			<input type="text" class="form-control" name="unit_number" id="unit" placeholder="Apartment/Unit" autocomplete="off" value="<%= @duplicate.unit_number %>" />
 		</div>
-	</div>
-	<div class="form-group">
-		<label for="outcome">Outcome:</label>
-		<select class="form-control" name="outcome" id="outcome">
-			<option value="">Please Select</option>
-			<% Entry::OUTCOMES.each do |id, outcome| %>
-			<option value="<%= id %>"<%= ' selected="selected"' if @duplicate.outcome == id %>><%= outcome %></option>
-			<% end %>
-		</select>
 	</div>
 	<div class="form-group">
 		<label for="people">Residents:</label>
@@ -55,21 +35,26 @@
 			<% end %>
 		</div>
 	</div>
-	<div class="form-group">
-		Conversation Themes Covered:
-		<% Entry::THEMES.each do |id, theme| %>
-		<div class="form-check">
-			<label class="form-check-label">
-				<input type="checkbox" class="form-check-input themes" name="themes[]" value="<%= id %>" id="theme-<%= id %>"<%= ' checked="checked"' if @duplicate.themes.include?(id) %> />
-				<%= theme %>
-			</label>
-		</div>
-		<% end %>
-	</div>
-	<div class="form-group">
-		<label for="notes">Notes:</label>
-		<textarea name="notes" id="notes" class="form-control" placeholder="Notes" rows="4"><%= @duplicate.notes %></textarea>
-	</div>
+	<% @duplicate.visits.each_with_index do |visit, i| %>
+	<hr />
+	<h4><%= (@duplicate.visits.size - i).ordinalize %> Visit</h4>
+	<dl>
+		<dt>Team Members:</dt>
+		<dd><%= visit.team %></dd>
+
+		<dt>Date:</dt>
+		<dd><%= visit.date %></dd>
+
+		<dt>Outcome:</dt>
+		<dd><%= visit.outcome_text %></dd>
+
+		<dt>Conversation Themes Covered:</dt>
+		<dd><%= visit.themes.empty? ? "-" : visit.themes.map {|a| Visit::THEMES[a]}.join(", ") %></dd>
+
+		<dt>Notes:</dt>
+		<dd><%=simple_format visit.notes.blank? ? "-" : visit.notes %></dd>
+	</dl>
+	<% end %>
 	<div class="form-group">
 		<button class="btn btn-primary right" type="submit">Merge</button>
 	</div>

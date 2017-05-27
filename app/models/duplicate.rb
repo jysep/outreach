@@ -18,8 +18,8 @@ class Duplicate < ApplicationRecord
 		end
 	end
 
-	def team
-		@team ||= entry1.team + "; " + entry2.team
+	def visits
+		@visits ||= (entry1.visits + entry2.visits).sort_by {|v| v.date}.reverse
 	end
 
 	def street
@@ -35,30 +35,22 @@ class Duplicate < ApplicationRecord
 	end
 
 	def outcome
-		if ["1", "2"].include?(entry2.outcome)
-			entry1.outcome
+		if ["1", "2"].include?(entry2.last_outcome)
+			entry1.last_outcome
 		else
-			entry2.outcome
+			entry2.last_outcome
 		end
 	end
 
 	def people
-		@people ||= [entry1.people, entry2.people].select{|p| !p.blank?}.join("; ")
+		@people ||= [entry1.people, entry2.people].select(&:present?).join("; ")
 	end
 
 	def contact
-		@contact ||= [entry1.contact, entry2.contact].select{|c| !c.blank?}.join("; ")
+		@contact ||= [entry1.contact, entry2.contact].select(&:present?).join("; ")
 	end
 
 	def age_groups
 		@age_groups ||= entry1.age_groups + entry2.age_groups
-	end
-
-	def themes
-		@themes ||= entry1.themes + entry2.themes
-	end
-
-	def notes
-		@notes ||= [entry1.notes, entry2.notes].select{|n| !n.blank?}.join("\n\n")
 	end
 end

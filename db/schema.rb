@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170514053604) do
+ActiveRecord::Schema.define(version: 20170515025745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,20 +36,16 @@ ActiveRecord::Schema.define(version: 20170514053604) do
   create_table "entries", force: :cascade do |t|
     t.string "campaign_id"
     t.string "user_email"
-    t.string "team"
-    t.date "date"
-    t.string "time"
     t.string "street"
     t.string "street_number"
     t.string "unit_number"
-    t.string "outcome"
     t.string "people"
     t.string "contact"
     t.text "age_groups", default: [], array: true
-    t.text "themes", default: [], array: true
-    t.string "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "last_visit"
+    t.string "last_outcome"
     t.index ["campaign_id"], name: "index_entries_on_campaign_id"
   end
 
@@ -73,6 +69,18 @@ ActiveRecord::Schema.define(version: 20170514053604) do
     t.datetime "updated_at", null: false
     t.string "email"
     t.index ["email"], name: "index_users_on_email"
+  end
+
+  create_table "visits", force: :cascade do |t|
+    t.integer "entry_id"
+    t.string "team"
+    t.date "date"
+    t.string "time"
+    t.string "outcome"
+    t.string "themes", default: [], array: true
+    t.string "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

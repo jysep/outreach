@@ -35,9 +35,9 @@
 			<% @entries.each do |entry| %>
 			<tr data-href="<%= entry_path(entry.id) %>">
 				<td><%= entry.full_address %></td>
-				<td><%= Entry::OUTCOMES[entry.outcome] %></td>
+				<td><%= entry.last_outcome_text %></td>
 				<td><%= entry.people %></td>
-				<td><%= entry.date %></td>
+				<td><%= entry.last_visit %></td>
 			</tr>
 			<% end %>
 		</tbody>

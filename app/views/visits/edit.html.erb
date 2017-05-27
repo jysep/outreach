@@ -1,0 +1,31 @@
+<h3 class="card-title"><%= @entry.full_address %> <%= @visit_num.ordinalize %> Visit</h3>
+<%= form_tag(visit_path(@visit.id), method: "PUT") do %>
+	<div class="row">
+		<div class="form-group col-lg">
+			<label for="team">Team Members:</label>
+			<input type="text" class="form-control" name="team" id="team" placeholder="Team Members" autocomplete="off" value="<%= @visit.team %>" />
+		</div>
+		<div class="form-group col-lg">
+			<label for="date">Date:</label>
+			<input type="date" class="form-control" name="date" id="date" value="<%= @visit.date %>" autocomplete="off" />
+		</div>
+	</div>
+	<div class="form-group">
+		Conversation Themes Covered:
+		<% Visit::THEMES.each do |id, theme| %>
+		<div class="form-check">
+			<label class="form-check-label">
+				<input type="checkbox" class="form-check-input themes" name="themes[]" value="<%= id %>" id="theme-<%= id %>"<%= ' checked="checked"' if @visit.themes.include?(id) %> />
+				<%= theme %>
+			</label>
+		</div>
+		<% end %>
+	</div>
+	<div class="form-group">
+		<label for="notes">Notes:</label>
+		<textarea name="notes" id="notes" class="form-control" placeholder="Notes" rows="4"><%= @visit.notes %></textarea>
+	</div>
+	<div class="form-group">
+		<button class="btn btn-primary right" type="submit">Update</button>
+	</div>
+<% end %>

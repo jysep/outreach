@@ -29,7 +29,7 @@
 		<label for="outcome">Outcome:</label>
 		<select class="form-control" name="outcome" id="outcome">
 			<option value="">Please Select</option>
-			<% Entry::OUTCOMES.each do |id, outcome| %>
+			<% Visit::OUTCOMES.each do |id, outcome| %>
 			<option value="<%= id %>"><%= outcome %></option>
 			<% end %>
 		</select>
@@ -57,7 +57,7 @@
 	</div>
 	<div class="form-group">
 		Conversation Themes Covered:
-		<% Entry::THEMES.each do |id, theme| %>
+		<% Visit::THEMES.each do |id, theme| %>
 		<div class="form-check">
 			<label class="form-check-label">
 				<input type="checkbox" class="form-check-input themes" name="themes[]" value="<%= id %>" id="theme-<%= id %>" />

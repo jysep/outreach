@@ -4,6 +4,7 @@ class EntriesController < ApplicationController
 
 	def show
 		@entry = Entry.find(params[:id])
+		@visits = @entry.visits.to_a
 		@campaign = @entry.campaign
 		unless current_user.can_see?(@campaign)
 			redirect_to '/'
@@ -22,25 +23,21 @@ class EntriesController < ApplicationController
 	def submit
 		successes = {}
 		submitparams = params.permit(:entries, :campaign_id)
-		params[:entries].each do |entry|
-			data = entry.require(:entry).permit(
-				:team,
-				:date,
-				:time,
-				:street,
-				:street_number,
-				:unit_number,
-				:outcome,
-				:people,
-				:contact,
-				:notes,
-				:age_groups => [],
-				:themes => [],
-			)
-			data[:campaign_id] = params[:campaign_id]
-			data[:user_email] = current_user.email if current_user
-			if Entry.create(data)
-				successes[entry[:timestamp]] = true
+		params[:entries].each do |record|
+			entry = Entry.new(submit_entry_params(record))
+			entry.campaign_id = params[:campaign_id]
+			entry.user_email = current_user.email
+
+			visit = Visit.new(submit_visit_params(record))
+			entry.last_outcome = visit.outcome
+			entry.last_visit = visit.date
+
+			Entry.transaction do
+				if entry.save
+					entry.visits << visit
+					visit.save
+					successes[record[:timestamp]] = true
+				end
 			end
 		end
 		render json: {successes: successes}
@@ -48,6 +45,7 @@ class EntriesController < ApplicationController
 
 	def edit
 		@entry = Entry.find(params[:id])
+		@visits = @entry.visits
 		@campaign = @entry.campaign
 		unless current_user.can_see?(@campaign)
 			redirect_to '/'
@@ -57,8 +55,7 @@ class EntriesController < ApplicationController
 
 	def update
 		@entry = Entry.find(params[:id])
-		@campaign = @entry.campaign
-		unless current_user.can_see?(@campaign)
+		unless current_user.can_see?(@entry.campaign)
 			redirect_to '/'
 			return
 		end
@@ -68,6 +65,28 @@ class EntriesController < ApplicationController
 	end
 
 	def destroy
+	end
+
+	def submit_entry_params(entry)
+		entry.require(:entry).permit(
+			:street,
+			:street_number,
+			:unit_number,
+			:people,
+			:contact,
+			:age_groups => [],
+		)
+	end
+
+	def submit_visit_params(entry)
+		entry.require(:entry).permit(
+			:team,
+			:date,
+			:time,
+			:outcome,
+			:notes,
+			:themes => [],
+		)
 	end
 
 	def entry_params
