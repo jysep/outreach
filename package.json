@@ -1,5 +1,5 @@
 {
-  "name": "outreach-data",
+  "name": "react-webpack-rails-tutorial",
   "version": "0.0.1",
   "private": true,
   "engines": {
@@ -8,6 +8,7 @@
   },
   "scripts": {
     "postinstall": "cd client && yarn install",
+    "rails-server": "echo 'visit http://localhost:3000/hello_world' && foreman start -f Procfile.dev",
     "test": "rspec"
   }
 }
