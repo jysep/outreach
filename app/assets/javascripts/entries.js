@@ -258,4 +258,13 @@ $(function() {
 	$("#entries-form input, #entries-form select, #entries-form textarea").on("change keyup", function() {
 		storeVal(this);
 	});
+
+	$('#entries-form #outcome').on("change", function() {
+		var $this = $(this);
+		if ($this.val() == "1" || $this.val() == "2" || $this.val() == "3") {
+			$("html, body").animate({
+				scrollTop: $("#entry-submit").parent().offset().top - 50
+			}, 200);
+		}
+	});
 });
