@@ -29,8 +29,8 @@ class EntriesController < ApplicationController
 			entry.user_email = current_user.email
 
 			visit = Visit.new(submit_visit_params(record))
-			entry.last_outcome = visit.outcome
-			entry.last_visit = visit.date
+			entry[:last_outcome] = visit.outcome
+			entry[:last_visit] = visit.date
 
 			Entry.transaction do
 				if entry.save
