@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :sessions, only: [:create, :destroy]
   resource :home, only: [:show]
   resources :campaigns, only: [:index, :create, :new, :show, :destroy] do
+    resource :search, only: [:new, :show]
     resources :permissions, only: [:create]
     resources :entries, only: [:index] do
       post 'submit', on: :collection

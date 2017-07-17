@@ -1,0 +1,22 @@
+<div class="card-block">
+	<table class="table" id="entry-links">
+		<thead>
+			<tr>
+				<th>Address</th>
+				<th>Outcome</th>
+				<th>People</th>
+				<th>Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% entries.each do |entry| %>
+			<tr data-href="<%= entry_path(entry.id) %>">
+				<td><%= entry.full_address %></td>
+				<td><%= entry.last_outcome_text %></td>
+				<td><%= entry.people %></td>
+				<td><%= entry.last_visit %></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

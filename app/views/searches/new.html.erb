@@ -1,0 +1,30 @@
+<h3 class="card-title">Search: <%= @campaign.name %></h3>
+<%= form_tag(campaign_search_path(@campaign), method: :get) do %>
+	<div class="form-group">
+		<label for="keywords">Keywords:</label>
+		<input class="form-control" type="text" name="keywords" id="keywords" />
+	</div>
+	<div class="form-group">
+		<label for="age-group">Age Group:</label>
+		<select class="form-control" name="age_group" id="age-group">
+		<option value="">Any</option>
+		<% Entry::AGE_GROUPS.each do |id, group| %>
+			<option value="<%= id %>"><%= group %></option>
+		<% end %>
+		</select>
+	</div>
+	<div class="form-group">
+		Outcome:
+		<% Visit::OUTCOMES.each do |id, outcome| %>
+		<div class="form-check">
+			<label class="form-check-label">
+				<input type="checkbox" class="form-check-input themes" name="outcomes[]" value="<%= id %>" id="outcomes-<%= id %>" />
+				<%= outcome %>
+			</label>
+		</div>
+		<% end %>
+	</div>
+	<div class="form-group">
+		<button type="submit" class="btn btn-primary">Search</button>
+	</div>
+<% end %>
