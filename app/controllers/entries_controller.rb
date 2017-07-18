@@ -26,7 +26,7 @@ class EntriesController < ApplicationController
 		params[:entries].each do |record|
 			entry = Entry.new(submit_entry_params(record))
 			entry.campaign_id = params[:campaign_id]
-			entry.user_email = current_user.email
+			entry.user_email = current_user.email if current_user
 
 			visit = Visit.new(submit_visit_params(record))
 			entry[:last_outcome] = visit.outcome
