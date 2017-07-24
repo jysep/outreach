@@ -35,7 +35,7 @@ class Duplicate < ApplicationRecord
 	end
 
 	def outcome
-		if ["1", "2"].include?(entry2.last_outcome)
+		if ["1", "2", "3"].include?(entry2.last_outcome)
 			entry1.last_outcome
 		else
 			entry2.last_outcome
