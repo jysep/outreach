@@ -15,7 +15,7 @@ class SearchesController < ApplicationController
 			redirect_to '/'
 			return
 		end
-		@entries = @campaign.entries.includes(:visits).order(last_visit: :desc, street: :desc, street_number: :desc, unit_number: :desc)
+		@entries = @campaign.entries.joins(:visits).order(last_visit: :desc, street: :desc, street_number: :desc, unit_number: :desc)
 		if params[:keywords].present?
 			keywords = params[:keywords].split(" ")
 			keyword_params = {}
@@ -33,6 +33,6 @@ class SearchesController < ApplicationController
 		if params[:outcomes].present?
 			@entries = @entries.where("entries.last_outcome IN (?)", params[:outcomes])
 		end
-		@entries = @entries.to_a
+		@entries = @entries.to_a.uniq
 	end
 end
