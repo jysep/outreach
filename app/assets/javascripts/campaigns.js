@@ -3,6 +3,11 @@ $(function() {
 		if (window.getSelection().type == "Range") {
 			return;
 		}
-		location.href = $(this).data("href");
+		var href = $(this).data("href");
+		if (e.metaKey) {
+			var win = window.open(href, "_blank");
+		} else {
+			location.href = href;
+		}
 	});
 });
