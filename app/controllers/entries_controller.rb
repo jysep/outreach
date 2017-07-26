@@ -98,7 +98,7 @@ class EntriesController < ApplicationController
 			:street,
 			:street_number,
 			:unit_number,
-			:outcome,
+			:last_outcome,
 			:people,
 			:contact,
 			:notes,

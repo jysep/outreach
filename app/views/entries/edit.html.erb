@@ -36,6 +36,14 @@
 		</div>
 	</div>
 	<div class="form-group">
+		<label for="last-outcome">Last Outcome:</label>
+		<select class="form-control" name="last_outcome" id="last-outcome">
+			<% Visit::OUTCOMES.each do |id, outcome| %>
+			<option value="<%= id %>"<%= ' selected="select"' if id == @entry.last_outcome %>><%= outcome %></option>
+			<% end %>
+		</select>
+	</div>
+	<div class="form-group">
 		<button class="btn btn-primary right" type="submit">Update</button>
 	</div>
 <% end %>
