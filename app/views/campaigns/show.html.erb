@@ -22,6 +22,6 @@
 	<strong>Data Entry Form:</strong> <%= link_to campaign_entries_url(@campaign.id), campaign_entries_path(@campaign.id) %>
 </div>
 <div class="card-block">
-	<%= link_to "Search", new_campaign_search_path(@campaign.id), target: "_blank", class: "btn btn-primary" %>
+	<%= link_to "Search", new_campaign_search_path(@campaign.id), class: "btn btn-primary" %>
 </div>
 <%= render "entry_list", entries: @entries %>
