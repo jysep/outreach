@@ -24,7 +24,7 @@ class SearchesController < ApplicationController
 				pname = "param#{pnum}"
 				keyword_params[pname.to_sym] = "%#{k}%"
 				"(" + SEARCH_FIELDS.map do |f|
-					"#{f} LIKE :#{pname}"
+					"#{f} ILIKE :#{pname}"
 				end.join(" OR ") + ")"
 			end.join(" AND ")
 			@entries = @entries.where(keyword_query, keyword_params)
