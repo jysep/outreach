@@ -6,7 +6,8 @@ class Duplicate < ApplicationRecord
 	def self.create_for_entries(campaign_id, entry)
 		ids = Entry.where(
 			street_number: entry[:street_number],
-			unit_number: entry[:unit_number])
+			unit_number: entry[:unit_number],
+			campaign_id: campaign_id)
 			.order(id: :asc)
 			.pluck(:id)
 		ids.combination(2).each do |pair|
